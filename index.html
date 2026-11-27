@@ -955,6 +955,55 @@ body.gating .sheet{z-index:60}
 #locgate p{margin:0 0 20px;font-size:15px;line-height:1.45;color:#55554f}
 #locgate .lgT{display:block;width:100%;margin-top:12px;padding:10px;text-align:center;font:700 14.5px/1 Inter,sans-serif;text-decoration:underline;color:#111112}
 #locgate .lgm{min-height:18px;margin-top:6px;font-size:13px;line-height:1.4;color:#55554f;text-align:center}
+
+/* ===== DESKTOP LAYOUT SYSTEM (laptop and up) ===== */
+@media(min-width:900px){
+ h2.sec{font-size:40px!important;margin:48px 0 18px!important}
+ .pad+h2.sec,#view>h2.sec:first-child,.memain h2.sec:first-child,.sx h2.sec:first-child{margin-top:34px!important}
+ .sx.theatres h2.sec:first-child{margin-top:44px!important}
+ .seg{width:fit-content;max-width:100%}
+ .seg button{padding:10px 26px;white-space:nowrap}
+ .note,.cl-how{max-width:none}
+ /* HOME */
+ .lcol{display:contents}
+ .dgrid{column-gap:40px}
+ .sx.talk{grid-column:1/9;grid-row:2}
+ .sx.side{grid-column:9/13;grid-row:2;position:static}
+ .sx.radar{grid-column:1/-1;grid-row:3}
+ .sx.merch{grid-row:4}.sx.spare{grid-row:5}
+ .sx.radar .list{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;column-gap:40px!important}
+ .sx.radar .rad:nth-child(-n+3){border-top:2px solid var(--ink)}
+ .sx.side .list{display:flex;flex-direction:column;gap:12px}
+ .sx.side .item{border:2px solid #111112;border-radius:16px;background:#fff;padding:10px 14px;box-shadow:3px 3px 0 #111112}
+ .sx.spare .list{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:20px!important}
+ .sx.talk .fpost{margin-left:0;margin-right:0}
+ /* BOOK */
+ .browgrid{grid-template-columns:repeat(2,minmax(0,1fr));gap:22px}
+ .brow{padding:18px!important}
+ .brow .bh{padding:0!important;gap:18px}
+ .brow .bh .poster,.brow .bh .p-s{width:104px!important}
+ .brow .times{padding:14px 0 0!important}
+ /* CLUBS */
+ .hls{grid-template-columns:repeat(4,minmax(0,1fr));gap:22px}
+ .hl .i{flex-direction:column!important;align-items:flex-start!important;justify-content:space-between!important;min-height:84px;gap:8px}
+ .hl .i b{font-size:28px!important;line-height:.95}
+ .hl .i em{font-size:14px!important}
+ .cfh{margin-top:56px!important}
+ .cfeed{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:40px;align-items:start}
+ .cfeed .fpost{margin-left:0;margin-right:0}
+ /* MEET */
+ #view>.list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+ #view>div:has(>.btn.block){margin:22px 0 0!important}
+ #view>div>.btn.block{max-width:380px;margin:0!important}
+ .memain .btn.block{max-width:260px;margin:22px 0 0!important}
+ /* ME */
+ .mepg{padding-top:30px}
+ .meside{padding:24px}
+}
+@media(min-width:1300px){
+ .browgrid{grid-template-columns:repeat(3,minmax(0,1fr))}
+ #view>.list{grid-template-columns:repeat(3,minmax(0,1fr))}
+}
 </style>
 </head>
 <body><div class="stage"><div id="app">
@@ -1587,7 +1636,8 @@ function hotClubs(n){const cnt=id=>feedRank().filter(x=>heroOf(x.p)===id).length
 function camps(){const L=hotClubs();
   $("#view").innerHTML=`<h2 class="sec disp" style="margin-bottom:0">Fan clubs</h2>
   <p class="cl-how">Pick your hero. Posts tagged to him land in his club.</p>
-  <div class="hls">${L.map((c,i)=>`<button class="hl v${i%3}" style="--cc:${CCOL[c.id]||"#FFD400"}" onclick="openCamp('${c.id}')"><span class="o"><span class="i"><b>${esc(c.n)}</b><em>${S.camp===c.id?"Your club":c.k+(c.k===1?" post":" posts")}</em></span></span></button>`).join("")}</div>`}
+  <div class="hls">${L.map((c,i)=>`<button class="hl v${i%3}" style="--cc:${CCOL[c.id]||"#FFD400"}" onclick="openCamp('${c.id}')"><span class="o"><span class="i"><b>${esc(c.n)}</b><em>${S.camp===c.id?"Your club":c.k+(c.k===1?" post":" posts")}</em></span></span></button>`).join("")}</div>
+  <h2 class="sec disp cfh">Latest from fans</h2><div class="cfeed">${feedRank().slice(0,6).map(x=>feedCard(x,9)).join("")}</div>`}
 function fitClub(){const v=document.getElementById("view"),c=document.querySelector(".cpg");if(!v||!c||!v.classList.contains("cp"))return;if(matchMedia("(min-width:900px)").matches){c.style.height="";return}
  const cs=getComputedStyle(v),avail=v.clientHeight-parseFloat(cs.paddingBottom||0);c.style.height=avail+"px";const r=c.getBoundingClientRect().height;if(r)c.style.height=(avail*avail/r)+"px"}
 addEventListener("resize",fitClub);
