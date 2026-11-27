@@ -1,4 +1,4 @@
-const V="interval-v60";
+const V="interval-v61";
 const SHELL=["./","./index.html","./manifest.webmanifest","./icons/icon-192.png","./icons/icon-512.png","./fonts/archivo-latin.woff2","./fonts/archivo-latin-ext.woff2","./fonts/intertight-latin.woff2","./fonts/intertight-latin-ext.woff2","./fonts/instrumentserif.woff2"];
 self.addEventListener("install",e=>{e.waitUntil(caches.open(V).then(c=>c.addAll(SHELL)).then(()=>self.skipWaiting()))});
 self.addEventListener("activate",e=>{e.waitUntil(caches.keys().then(k=>Promise.all(k.filter(x=>x!==V).map(x=>caches.delete(x)))).then(()=>self.clients.claim()))});
